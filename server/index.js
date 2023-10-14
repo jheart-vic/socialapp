@@ -52,7 +52,10 @@ destination: (req, file, cb) => {
 cb(null, "public/assets");
 },
 filename: (req, file, cb) => {
-cb(null,file.originalname);
+  const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
+  const ext = path.extname(file.originalname);
+  const filename = file.fieldname + "-" + uniqueSuffix + ext;
+  cb(null, filename);
 }
 });
 
