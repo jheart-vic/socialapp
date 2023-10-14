@@ -100,7 +100,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`https://socialapp-amber.vercel.app//assets/${picturePath}`}
+          src={`https://socialapp-amber.vercel.app/assets/${picturePath}`}
         />
       )}
       <FlexBetween mt="0.25rem">
@@ -129,7 +129,7 @@ const PostWidget = ({
         </IconButton>
       </FlexBetween>
       <SharePopup
-        postUrl={`https://socialapp-amber.vercel.app//posts/${postId}`}
+        postUrl={`https://socialapp-amber.vercel.app/posts/${postId}`}
         open={isSharePopupOpen}
         onClose={closeSharePopup}
       />
