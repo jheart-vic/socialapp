@@ -45,6 +45,7 @@ const MyPostWidget = ({ picturePath }) => {
     if (image) {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
+      console.log("image.name", image.name);
     }
 
     const response = await fetch(`https://sharesocial.onrender.com/posts`, {

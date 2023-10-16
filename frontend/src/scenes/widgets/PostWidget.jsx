@@ -56,8 +56,6 @@ const PostWidget = ({
   };
 
   const handleCommentSubmit = async () => {
-    console.log('postId:', postId);
-    console.log('comments:', comments.useId, "commentInput:", commentInput);
     const response = await fetch(`https://sharesocial.onrender.com//posts/${postId}/comments`, {
       method: "POST",
       headers: {
