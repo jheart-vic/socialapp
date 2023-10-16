@@ -20,7 +20,10 @@ const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
   lastName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required"),
+  password: yup
+  .string()
+  .required("required")
+  .min(5, "Password must be at least 5 characters long"),
   location: yup.string().required("required"),
   occupation: yup.string().required("required"),
   picture: yup.string().required("required"),
@@ -54,53 +57,105 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
+const[badgeText, setBadgeText]=useState("")
+const[bgColor, setBgColor]=useState("")
+const[showBadge, setShowBadge]=useState(false)
+
 
   const register = async (values, onSubmitProps) => {
-
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
     formData.append("picturePath", values.picture.name);
 
-    const savedUserResponse = await fetch(
-      "https://socialapp-amber.vercel.app/auth/register",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    const savedUser = await savedUserResponse.json();
-    onSubmitProps.resetForm();
+    const savedUserResponse = await fetch("http://localhost:3001/auth/register", {
+      method: "POST",
+      body: formData,
+    });
 
-    if (savedUser) {
-      setPageType("login");
+    if (savedUserResponse.status === 201) {
+      onSubmitProps.resetForm();
+      return true;
+    } else {
+      onSubmitProps.setFieldError();
+      return false;
     }
   };
+
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("https://socialapp-amber.vercel.app/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
-    if (loggedIn) {
-      dispatch(
-        setLogin({
-          user: loggedIn.user,
-          token: loggedIn.token,
-        })
-      );
-      navigate("/home");
+    try {
+      const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      if (loggedInResponse.status === 200) {
+        const loggedIn = await loggedInResponse.json();
+        onSubmitProps.resetForm();
+        dispatch(
+          setLogin({
+            user: loggedIn.user,
+            token: loggedIn.token,
+          })
+        );
+        return loggedIn;
+      } else {
+        console.error("Login failed:", loggedInResponse.statusText);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      return null;
     }
   };
 
+
   const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isLogin) await login(values, onSubmitProps);
-    if (isRegister) await register(values, onSubmitProps);
+    if (isLogin) {
+      const loggedIn = await login(values, onSubmitProps);
+      if (loggedIn) {
+        setBgColor("green");
+        setBadgeText("Login Successful !!!");
+        setShowBadge(true);
+        setTimeout(() => {
+          navigate("/home");
+        }, 2000);
+      } else {
+        setBgColor("red");
+        setBadgeText("Login Failed, Incorrect Credentials !!!");
+        setShowBadge(true);
+        setTimeout(() => {
+          setBgColor("");
+          setShowBadge(false);
+        }, 2000);
+      }
+    }
+
+    if (isRegister) {
+      const savedUserResponse = await register(values, onSubmitProps);
+      if (savedUserResponse) {
+        setBgColor("green");
+        setBadgeText("Registration Successful !!!");
+        setShowBadge(true);
+        setTimeout(() => {
+          setPageType("login");
+          setBgColor("");
+          setShowBadge(false);
+        }, 2000);
+      } else {
+        setBgColor("red");
+        setBadgeText("Registration Failed !!!");
+        setShowBadge(true);
+        setTimeout(() => {
+          setBgColor("");
+          setShowBadge(false);
+        }, 2000)
+      }
+    }
   };
+
 
   return (
     <Formik
@@ -118,6 +173,26 @@ const Form = () => {
         setFieldValue,
         resetForm,
       }) => (
+
+        <div style={{ position: 'relative' }}>
+        {showBadge && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              backgroundColor: bgColor === 'green' ? 'green' : 'red',
+              color: 'white',
+              padding: '8px',
+              borderRadius: '4px',
+              zIndex: 1,
+            }}
+          >
+            <Typography>{badgeText}</Typography>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <Box
             display="grid"
@@ -267,6 +342,7 @@ const Form = () => {
             </Typography>
           </Box>
         </form>
+        </div>
       )}
     </Formik>
   );
