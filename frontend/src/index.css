@@ -8,3 +8,50 @@ body,
   width: 100%;
   font-family: "Rubik", sans-serif;
 }
+
+
+.loading-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #1A1A1A;
+}
+
+.loading-spinner-content {
+  text-align: center;
+  display: flex;
+  gap: 3px;
+}
+
+.loading-text {
+  color: #22a2bb;
+  font-size: 40px;
+}
+
+.loading-spinner {
+  margin: 0 10px;
+}
+
+.loading-moving-text {
+  color: #b5c8cc;
+  font-size: 20px;
+  animation: textAnimation 2s ease-in-out infinite;
+}
+
+@keyframes textAnimation {
+
+  0% {
+    transform: translateX(0);
+    transform: scale(1);
+  }
+  50% {
+    transform: translateX(20px);
+    transform: scale(1.1);
+  }
+  100% {
+    transform: translateX(0);
+    transform: scale(1);
+  }
+}
