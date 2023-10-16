@@ -8,7 +8,7 @@ const PostDisplay = () => {
   useEffect(() => {
     const fetchPostData = async () => {
       try {
-        const response = await fetch(`https://socialapp-amber.vercel.app/posts/${postId}`);
+        const response = await fetch(`https://sharesocial.onrender.com/posts/${postId}`);
         if (response.ok) {
           const data = await response.json();
 

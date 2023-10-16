@@ -27,7 +27,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const corsOptions = {
-  origin: "http://localhost:3002",
+  origin: "https://socialapp-frontend123.vercel.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,

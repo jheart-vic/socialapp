@@ -69,7 +69,7 @@ const[showBadge, setShowBadge]=useState(false)
     }
     formData.append("picturePath", values.picture.name);
 
-    const savedUserResponse = await fetch("https://socialapp-amber.vercel.app/auth/register", {
+    const savedUserResponse = await fetch("https://sharesocial.onrender.com/auth/register", {
       method: "POST",
       body: formData,
     });
@@ -86,7 +86,7 @@ const[showBadge, setShowBadge]=useState(false)
 
   const login = async (values, onSubmitProps) => {
     try {
-      const loggedInResponse = await fetch("https://socialapp-amber.vercel.app/auth/login", {
+      const loggedInResponse = await fetch("https://sharesocial.onrender.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),

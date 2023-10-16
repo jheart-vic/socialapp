@@ -43,7 +43,7 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    const response = await fetch(`https://socialapp-amber.vercel.app//posts/${postId}/like`, {
+    const response = await fetch(`https://sharesocial.onrender.com//posts/${postId}/like`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ const PostWidget = ({
   const handleCommentSubmit = async () => {
     console.log('postId:', postId);
     console.log('comments:', comments.useId, "commentInput:", commentInput);
-    const response = await fetch(`https://socialapp-amber.vercel.app//posts/${postId}/comments`, {
+    const response = await fetch(`https://sharesocial.onrender.com//posts/${postId}/comments`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -100,7 +100,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`https://socialapp-amber.vercel.app/assets/${picturePath}`}
+          src={`https://sharesocial.onrender.com/assets/${picturePath}`}
         />
       )}
       <FlexBetween mt="0.25rem">
@@ -129,7 +129,7 @@ const PostWidget = ({
         </IconButton>
       </FlexBetween>
       <SharePopup
-        postUrl={`https://socialapp-amber.vercel.app/posts/${postId}`}
+        postUrl={`https://sharesocial.onrender.com/posts/${postId}`}
         open={isSharePopupOpen}
         onClose={closeSharePopup}
       />

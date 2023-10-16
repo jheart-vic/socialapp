@@ -8,7 +8,7 @@ const UserImage = ({ image, size = "60px" }) => {
         width={size}
         height={size}
         alt="user"
-        src={`https://socialapp-amber.vercel.app/assets/${image}`}
+        src={`https://sharesocial.onrender.com/assets/${image}`}
       />
     </Box>
   );
