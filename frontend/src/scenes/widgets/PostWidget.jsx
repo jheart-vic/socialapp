@@ -43,7 +43,7 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    const response = await fetch(`https://sharesocial.onrender.com//posts/${postId}/like`, {
+    const response = await fetch(`https://sharesocial.onrender.com/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const PostWidget = ({
   };
 
   const handleCommentSubmit = async () => {
-    const response = await fetch(`https://sharesocial.onrender.com//posts/${postId}/comments`, {
+    const response = await fetch(`https://sharesocial.onrender.com/posts/${postId}/comments`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
