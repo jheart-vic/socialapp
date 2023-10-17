@@ -332,7 +332,7 @@ const[showBadge, setShowBadge]=useState(false)
                 color: palette.primary.main,
                 "&:hover": {
                   cursor: "pointer",
-                  color: palette.primary.light,
+                  transform: "translateX(18px) scale(1.1)",
                 },
               }}
             >
